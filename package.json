@@ -1,0 +1,24 @@
+{
+  "name": "gtfs-importer",
+  "version": "0.1.0",
+  "type": "module",
+  "private": false,
+  "scripts": {
+    "build": "bun x rimraf dist && bun build ./cli.ts --compile --outfile ./dist/gtfs-importer --external @aws-sdk/client-s3"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/unzipper": "^0.10.11"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "csv": "^6.4.1",
+    "gtfs-realtime-bindings": "^1.1.1",
+    "meow": "^14.0.0",
+    "postgres": "3.4.7",
+    "tmp-promise": "^3.0.3",
+    "unzipper": "^0.12.3"
+  }
+}
