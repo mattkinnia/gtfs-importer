@@ -10,7 +10,7 @@ export const scheduleCommand = async (argv: string[]) => {
       $ gtfs-importer schedule [options] <path>
 
     Options
-      --schema  -s  PostgreSQL database schema (default: public).
+      --schema, -s  PostgreSQL database schema (default: public).
 
     Examples
       $ gtfs-importer schedule --schema gtfs path/to/gtfs.zip
