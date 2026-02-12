@@ -21,7 +21,7 @@ export const realtimeCommand = async (argv: string[]) => {
         schema: {
           type: "string",
           shortFlag: "s",
-          default: "public",
+          isRequired: true,
         },
       },
     },
