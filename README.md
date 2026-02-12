@@ -33,7 +33,7 @@ Usage
   $ gtfs-importer realtime [options] <path>
 
 Options
-  --schema, -s  PostgreSQL database schema (default: public).
+  --schema,  -s  PostgreSQL database schema.
 
 Examples
   $ gtfs-importer realtime --schema gtfs path/to/realtime.pb
@@ -54,7 +54,7 @@ Usage
   $ gtfs-importer schedule [options] <path>
 
 Options
-  --schema, -s  PostgreSQL database schema (default: public).
+  --schema,  -s  PostgreSQL database schema.
 
 Examples
   $ gtfs-importer schedule --schema gtfs path/to/gtfs.zip
@@ -82,13 +82,13 @@ The following GTFS Schedule files are supported:
 
 `gtfs-importer` works with standard PostgreSQL, so it can connect to an existing database without custom drivers or extensions.
 
-### Connecting
+### Connect
 
 PostgreSQL connections are configured using the standard `PG*` environment variables. This makes `gtfs-importer` compatible with common PostgreSQL tooling and setups.
 
 ## S3-compatible Storage
 
-`gtfs-importer` can import feeds directly from S3-compatible storage (such as AWS S3, Cloudflare R2 and more).
+`gtfs-importer` can import feeds directly from S3-compatible storage (such as AWS S3, Cloudflare R2 and MinIO).
 
 S3-compatible storage providers are configured using the standard `S3*` environment variables. When the environment variables are set, you can use `s3://` prefixed paths.
 
@@ -103,6 +103,6 @@ $ gtfs-importer schedule --schema gtfs s3://path/to/gtfs.zip
 
 ## GTFS Validation
 
-`gtfs-importer` does not validate feeds against the GTFS specification. Data is imported on an **as-is** basis.
+`gtfs-importer` does not validate feeds against the GTFS specification. Data is imported as-is.
 
 It is strongly recommended that feeds are validated prior to import using an external GTFS validation tool, such as the [Canonical GTFS Schedule Validator](https://github.com/MobilityData/gtfs-validator).
