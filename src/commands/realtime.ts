@@ -40,7 +40,7 @@ export const realtimeCommand = async (argv: string[]) => {
     throw new Error("File does not exist");
   }
 
-  console.info(`Importing to ${cli.flags.schema}...`);
+  console.info(`Importing to '${cli.flags.schema}'...`);
 
   const sql = postgres();
 
