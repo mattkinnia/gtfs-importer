@@ -1,10 +1,15 @@
-import { Table, type Col, type Ctx, type Row } from "@/lib/table";
+import {
+  Table,
+  type Col,
+  type RealtimeCtx as Ctx,
+  type Row,
+} from "@/lib/table";
 import { decodeGtfsRt } from "@/lib/utils";
 import type { Sql } from "postgres";
 
-export class TripUpdates extends Table {
+export class TripUpdates extends Table<Ctx> {
   override name = "rt_trip_updates";
-  override cols: Col[] = [
+  override cols: Col<Ctx>[] = [
     {
       name: "_ts",
       type: "BIGINT",

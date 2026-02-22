@@ -1,8 +1,8 @@
-import { Table, type Col } from "@/lib/table";
+import { Table, type Col, type ScheduleCtx as Ctx } from "@/lib/table";
 
-export class CalendarDates extends Table {
+export class CalendarDates extends Table<Ctx> {
   override name = "calendar_dates";
-  override cols: Col[] = [
+  override cols: Col<Ctx>[] = [
     {
       name: "service_id",
       type: "TEXT",

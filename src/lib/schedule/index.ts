@@ -1,4 +1,4 @@
-import type { Ctx } from "@/lib/table";
+import type { ScheduleCtx as Ctx } from "@/lib/table";
 import type { Sql } from "postgres";
 import { join } from "node:path";
 
@@ -84,7 +84,9 @@ const tables = [
 
 type Importable = (typeof tables)[number];
 
-export const runImportTask = async (sql: Sql, ctx: Ctx) => {
+export const runImportTask = async (sql: Sql, cmd: Omit<Ctx, "mode">) => {
+  const ctx: Ctx = { ...cmd, mode: "schedule" };
+
   await sql`CREATE SCHEMA IF NOT EXISTS ${sql(ctx.opts.schema)}`;
 
   const phases = [

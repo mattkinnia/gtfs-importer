@@ -1,8 +1,8 @@
-import { Table, type Col } from "@/lib/table";
+import { Table, type Col, type ScheduleCtx as Ctx } from "@/lib/table";
 
-export class FeedInfo extends Table {
+export class FeedInfo extends Table<Ctx> {
   override name = "feed_info";
-  override cols: Col[] = [
+  override cols: Col<Ctx>[] = [
     {
       name: "feed_publisher_name",
       type: "TEXT",

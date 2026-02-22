@@ -1,4 +1,4 @@
-import type { Ctx } from "@/lib/table";
+import type { RealtimeCtx as Ctx } from "@/lib/table";
 import type { Sql } from "postgres";
 
 // Tables
@@ -28,7 +28,9 @@ const tables = [
 
 type Importable = (typeof tables)[number];
 
-export const runImportTask = async (sql: Sql, ctx: Ctx) => {
+export const runImportTask = async (sql: Sql, cmd: Omit<Ctx, "mode">) => {
+  const ctx: Ctx = { ...cmd, mode: "realtime" };
+
   await sql`CREATE SCHEMA IF NOT EXISTS ${sql(ctx.opts.schema)}`;
 
   const file = Bun.file(ctx.path);

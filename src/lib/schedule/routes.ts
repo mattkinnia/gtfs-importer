@@ -1,9 +1,9 @@
-import { Table, type Col, type Ctx } from "@/lib/table";
+import { Table, type Col, type ScheduleCtx as Ctx } from "@/lib/table";
 import type { Sql } from "postgres";
 
-export class Routes extends Table {
+export class Routes extends Table<Ctx> {
   override name = "routes";
-  override cols: Col[] = [
+  override cols: Col<Ctx>[] = [
     {
       name: "route_id",
       type: "TEXT",

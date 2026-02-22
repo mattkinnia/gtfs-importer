@@ -4,16 +4,28 @@ import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
 import type { Sql } from "postgres";
 
-export type Ctx = {
-  path: string;
-  opts: {
-    schema: string;
-  };
+export type RealtimeOpts = {
+  schema: string;
 };
+
+export type ScheduleOpts = {
+  schema: string;
+};
+
+export type ImportOpts =
+  | { mode: "realtime"; opts: RealtimeOpts }
+  | { mode: "schedule"; opts: ScheduleOpts };
+
+export type Ctx = ImportOpts & {
+  path: string;
+};
+
+export type RealtimeCtx = Extract<Ctx, { mode: "realtime" }>;
+export type ScheduleCtx = Extract<Ctx, { mode: "schedule" }>;
 
 export type Row = Record<string, any>;
 
-export type Col = {
+export type Col<CtxT extends Ctx = Ctx> = {
   name: string;
   type: string;
   loader: ({
@@ -21,15 +33,15 @@ export type Col = {
     ctx,
   }: {
     row: Row;
-    ctx: Ctx;
+    ctx: CtxT;
   }) => string | number | null | undefined;
 };
 
-export abstract class Table {
+export abstract class Table<CtxT extends Ctx = Ctx> {
   abstract readonly name: string;
-  abstract readonly cols: readonly Col[];
+  abstract readonly cols: readonly Col<CtxT>[];
 
-  async create(sql: Sql, ctx: Ctx) {
+  async create(sql: Sql, ctx: CtxT) {
     const cols = this.cols.map(
       (col) => sql`${sql(col.name)} ${sql.unsafe(col.type)}`,
     );
@@ -41,7 +53,7 @@ export abstract class Table {
     await this._afterCreate(sql, ctx);
   }
 
-  async import(sql: Sql, ctx: Ctx & { file: Bun.BunFile }) {
+  async import(sql: Sql, ctx: CtxT & { file: Bun.BunFile }) {
     const reader = Readable.from(this._source(ctx.file));
 
     const writer = await sql`
@@ -72,11 +84,11 @@ export abstract class Table {
     }
   }
 
-  protected async _afterCreate(sql: Sql, ctx: Ctx) {
+  protected async _afterCreate(sql: Sql, ctx: CtxT) {
     // Default no-op
   }
 
-  protected async _afterImport(sql: Sql, ctx: Ctx) {
+  protected async _afterImport(sql: Sql, ctx: CtxT) {
     // Default no-op
   }
 }
