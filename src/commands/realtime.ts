@@ -9,7 +9,7 @@ export const realtimeCommand = async (argv: string[]) => {
       $ gtfs-importer realtime [options] <path>
 
     Options
-      --schema,       -s  PostgreSQL database schema (default: public).
+      --schema,       -s  PostgreSQL database schema.
       --delete-stale, -d  Delete stale database rows (keep the latest rows only).
 
     Examples
