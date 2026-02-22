@@ -108,4 +108,18 @@ export class Alerts extends Table<Ctx> {
       $$;
     `;
   }
+
+  protected override async _afterImport(sql: Sql, ctx: Ctx): Promise<void> {
+    if (ctx.opts.deleteStale) {
+      await sql`
+        WITH max_ts AS (
+          SELECT MAX(_ts) AS value
+          FROM ${sql(ctx.opts.schema)}.rt_alerts
+        )
+        DELETE FROM ${sql(ctx.opts.schema)}.rt_alerts t
+        USING max_ts
+        WHERE t._ts < max_ts.value;
+      `;
+    }
+  }
 }

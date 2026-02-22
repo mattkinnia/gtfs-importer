@@ -6,6 +6,7 @@ import type { Sql } from "postgres";
 
 export type RealtimeOpts = {
   schema: string;
+  deleteStale: boolean;
 };
 
 export type ScheduleOpts = {
