@@ -33,7 +33,7 @@ Usage
   $ gtfs-importer realtime [options] <path>
 
 Options
-  --schema,        -s  PostgreSQL database schema.
+  --schema,  -s  PostgreSQL database schema.
 
 Examples
   $ gtfs-importer realtime --schema gtfs path/to/realtime.pb
