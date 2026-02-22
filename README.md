@@ -34,7 +34,6 @@ Usage
 
 Options
   --schema,        -s  PostgreSQL database schema.
-  --delete-stale,  -d  Delete stale database rows (keep the latest rows only).
 
 Examples
   $ gtfs-importer realtime --schema gtfs path/to/realtime.pb
