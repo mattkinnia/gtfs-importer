@@ -10,9 +10,10 @@ export const realtimeCommand = async (argv: string[]) => {
 
     Options
       --schema,  -s  PostgreSQL database schema.
+      --id,      -i  Import ID.
 
     Examples
-      $ gtfs-importer realtime --schema gtfs path/to/realtime.pb
+      $ gtfs-importer realtime --schema gtfs --id 1 path/to/realtime.pb
     `,
     {
       importMeta: import.meta,
@@ -21,6 +22,11 @@ export const realtimeCommand = async (argv: string[]) => {
         schema: {
           type: "string",
           shortFlag: "s",
+          isRequired: true,
+        },
+        id: {
+          type: "string",
+          shortFlag: "i",
           isRequired: true,
         },
       },
@@ -49,7 +55,7 @@ export const realtimeCommand = async (argv: string[]) => {
       await runImportTask(tx, {
         path: path,
         opts: {
-          schema: cli.flags.schema,
+          ...cli.flags,
         },
       });
     });

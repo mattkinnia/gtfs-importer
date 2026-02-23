@@ -4,6 +4,11 @@ export class FeedInfo extends Table<Ctx> {
   override name = "feed_info";
   override cols: Col<Ctx>[] = [
     {
+      name: "_import_id",
+      type: "TEXT",
+      loader: ({ ctx }) => ctx.opts.id,
+    },
+    {
       name: "feed_publisher_name",
       type: "TEXT",
       loader: ({ row }) => row.feed_publisher_name,

@@ -11,14 +11,19 @@ export class TripUpdatesStopTimeUpdates extends Table<Ctx> {
   override name = "rt_trip_updates_stop_time_updates";
   override cols: Col<Ctx>[] = [
     {
-      name: "_ts",
-      type: "BIGINT",
-      loader: ({ row }) => row._ts,
+      name: "_import_id",
+      type: "TEXT",
+      loader: ({ ctx }) => ctx.opts.id,
     },
     {
-      name: "_id",
+      name: "_entity_id",
       type: "TEXT",
-      loader: ({ row }) => row._id,
+      loader: ({ row }) => row._entity_id,
+    },
+    {
+      name: "_timestamp",
+      type: "BIGINT",
+      loader: ({ row }) => row._timestamp,
     },
     {
       name: "stop_sequence",
@@ -82,8 +87,8 @@ export class TripUpdatesStopTimeUpdates extends Table<Ctx> {
       (entity: any) =>
         entity.tripUpdate?.stopTimeUpdate?.map((row: any) => ({
           ...row,
-          _ts: realtime.header.timestamp,
-          _id: entity.id,
+          _timestamp: realtime.header.timestamp,
+          _entity_id: entity.id,
         })) ?? [],
     );
 
@@ -98,8 +103,8 @@ export class TripUpdatesStopTimeUpdates extends Table<Ctx> {
       BEGIN
         ALTER TABLE ${sql(ctx.opts.schema)}.rt_trip_updates_stop_time_updates
           ADD CONSTRAINT rt_trip_updates_stop_time_updates__ts__id_fkey
-          FOREIGN KEY (_ts, _id)
-          REFERENCES ${sql(ctx.opts.schema)}.rt_trip_updates (_ts, _id)
+          FOREIGN KEY (_import_id, _entity_id)
+          REFERENCES ${sql(ctx.opts.schema)}.rt_trip_updates (_import_id, _entity_id)
           ON UPDATE CASCADE
           ON DELETE CASCADE;
       EXCEPTION

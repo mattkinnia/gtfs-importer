@@ -11,9 +11,10 @@ export const scheduleCommand = async (argv: string[]) => {
 
     Options
       --schema,  -s  PostgreSQL database schema.
+      --id,      -i  Import ID.
 
     Examples
-      $ gtfs-importer schedule --schema gtfs path/to/gtfs.zip
+      $ gtfs-importer schedule --schema gtfs --id 1 path/to/gtfs.zip
     `,
     {
       importMeta: import.meta,
@@ -22,6 +23,11 @@ export const scheduleCommand = async (argv: string[]) => {
         schema: {
           type: "string",
           shortFlag: "s",
+          isRequired: true,
+        },
+        id: {
+          type: "string",
+          shortFlag: "i",
           isRequired: true,
         },
       },
@@ -51,7 +57,7 @@ export const scheduleCommand = async (argv: string[]) => {
       await runImportTask(tx, {
         path: tmp.path,
         opts: {
-          schema: cli.flags.schema,
+          ...cli.flags,
         },
       });
     });

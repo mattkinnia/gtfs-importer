@@ -4,6 +4,11 @@ export class Translations extends Table<Ctx> {
   override name = "translations";
   override cols: Col<Ctx>[] = [
     {
+      name: "_import_id",
+      type: "TEXT",
+      loader: ({ ctx }) => ctx.opts.id,
+    },
+    {
       name: "table_name",
       type: "TEXT",
       loader: ({ row }) => row.table_name,

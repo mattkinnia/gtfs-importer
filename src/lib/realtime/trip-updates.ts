@@ -11,14 +11,19 @@ export class TripUpdates extends Table<Ctx> {
   override name = "rt_trip_updates";
   override cols: Col<Ctx>[] = [
     {
-      name: "_ts",
-      type: "BIGINT",
-      loader: ({ row }) => row._ts,
+      name: "_import_id",
+      type: "TEXT",
+      loader: ({ ctx }) => ctx.opts.id,
     },
     {
-      name: "_id",
+      name: "_entity_id",
       type: "TEXT",
-      loader: ({ row }) => row._id,
+      loader: ({ row }) => row._entity_id,
+    },
+    {
+      name: "_timestamp",
+      type: "BIGINT",
+      loader: ({ row }) => row._timestamp,
     },
     {
       name: "trip_id",
@@ -91,8 +96,8 @@ export class TripUpdates extends Table<Ctx> {
         ? [
             {
               ...entity.tripUpdate,
-              _ts: realtime.header.timestamp,
-              _id: entity.id,
+              _timestamp: realtime.header.timestamp,
+              _entity_id: entity.id,
             },
           ]
         : [],
@@ -109,7 +114,7 @@ export class TripUpdates extends Table<Ctx> {
       BEGIN
         ALTER TABLE ${sql(ctx.opts.schema)}.rt_trip_updates
           ADD CONSTRAINT rt_trip_updates_pkey
-          PRIMARY KEY (_ts, _id);
+          PRIMARY KEY (_import_id, _entity_id);
       EXCEPTION
         WHEN SQLSTATE '42710' THEN
           NULL;

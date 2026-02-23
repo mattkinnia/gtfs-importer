@@ -5,6 +5,11 @@ export class Stops extends Table<Ctx> {
   override name = "stops";
   override cols: Col<Ctx>[] = [
     {
+      name: "_import_id",
+      type: "TEXT",
+      loader: ({ ctx }) => ctx.opts.id,
+    },
+    {
       name: "stop_id",
       type: "TEXT",
       loader: ({ row }) => row.stop_id,

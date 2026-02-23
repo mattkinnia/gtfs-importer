@@ -6,10 +6,12 @@ import type { Sql } from "postgres";
 
 export type RealtimeOpts = {
   schema: string;
+  id: string;
 };
 
 export type ScheduleOpts = {
   schema: string;
+  id: string;
 };
 
 export type ImportOpts =
@@ -50,10 +52,20 @@ export abstract class Table<CtxT extends Ctx = Ctx> {
       CREATE TABLE IF NOT EXISTS ${sql(ctx.opts.schema)}.${sql(this.name)} (${concatSql(sql, cols)});
     `;
 
+    await sql`
+      CREATE INDEX IF NOT EXISTS ${sql(`${this.name}_import_id_idx`)}
+      ON ${sql(ctx.opts.schema)}.${sql(this.name)} (_import_id);
+    `;
+
     await this._afterCreate(sql, ctx);
   }
 
   async import(sql: Sql, ctx: CtxT & { file: Bun.BunFile }) {
+    await sql`
+      DELETE FROM ${sql(ctx.opts.schema)}.${sql(this.name)}
+      WHERE _import_id = ${ctx.opts.id};
+    `;
+
     const reader = Readable.from(this._source(ctx.file));
 
     const writer = await sql`

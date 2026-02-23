@@ -5,6 +5,11 @@ export class Attributions extends Table<Ctx> {
   override name = "attributions";
   override cols: Col<Ctx>[] = [
     {
+      name: "_import_id",
+      type: "TEXT",
+      loader: ({ ctx }) => ctx.opts.id,
+    },
+    {
       name: "attribution_id",
       type: "TEXT",
       loader: ({ row }) => row.attribution_id,

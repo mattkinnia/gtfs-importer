@@ -5,6 +5,11 @@ export class Agency extends Table<Ctx> {
   override name = "agency";
   override cols: Col<Ctx>[] = [
     {
+      name: "_import_id",
+      type: "TEXT",
+      loader: ({ ctx }) => ctx.opts.id,
+    },
+    {
       name: "agency_id",
       type: "TEXT",
       loader: ({ row }) => row.agency_id,

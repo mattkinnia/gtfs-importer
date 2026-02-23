@@ -4,6 +4,11 @@ export class StopTimes extends Table<Ctx> {
   override name = "stop_times";
   override cols: Col<Ctx>[] = [
     {
+      name: "_import_id",
+      type: "TEXT",
+      loader: ({ ctx }) => ctx.opts.id,
+    },
+    {
       name: "trip_id",
       type: "TEXT",
       loader: ({ row }) => row.trip_id,

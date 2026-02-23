@@ -5,6 +5,11 @@ export class Pathways extends Table<Ctx> {
   override name = "pathways";
   override cols: Col<Ctx>[] = [
     {
+      name: "_import_id",
+      type: "TEXT",
+      loader: ({ ctx }) => ctx.opts.id,
+    },
+    {
       name: "pathway_id",
       type: "TEXT",
       loader: ({ row }) => row.pathway_id,
