@@ -34,9 +34,10 @@ Usage
 
 Options
   --schema,  -s  PostgreSQL database schema.
+  --id,      -i  Import ID.
 
 Examples
-  $ gtfs-importer realtime --schema gtfs path/to/realtime.pb
+  $ gtfs-importer realtime --schema gtfs --id 1 path/to/realtime.pb
 ```
 
 The following GTFS Realtime entities are supported:
@@ -55,9 +56,10 @@ Usage
 
 Options
   --schema,  -s  PostgreSQL database schema.
+  --id,      -i  Import ID.
 
 Examples
-  $ gtfs-importer schedule --schema gtfs path/to/gtfs.zip
+  $ gtfs-importer schedule --schema gtfs --id 1 path/to/gtfs.zip
 ```
 
 The following GTFS Schedule files are supported:
